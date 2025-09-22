@@ -1,16 +1,27 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
-const express = require('express');
+const authRoutes = require("./routes/auth");
+
 const app = express();
-const PORT = 3000;
 
-app.get('/', (req, res) => {
-    res.send(`
-        <h1>Hola desde Node.js + Express</h1>
-        <h2>Equipo: 5</h2>
-        <h3>Proyecto: Restaurante App</h3>
-    `);
-});
+// Middlewares
+app.use(cors());
+app.use(bodyParser.json());
 
+// Conexión MongoDB local
+mongoose
+  .connect("mongodb://127.0.0.1:27017/loginDB", { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB conectado"))
+  .catch((err) => console.error("Error al conectar MongoDB:", err));
+
+// Rutas
+app.use("/api/auth", authRoutes);
+
+// Servidor
+const PORT = 5000;
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
