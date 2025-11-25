@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 
 const authRoutes = require("./routes/auth");
 const restaurantRoutes = require("./routes/restaurant");
+const userRoutes = require("./routes/user");
+const usersRoutes = require("./routes/users");
 
 const app = express();
 
@@ -21,6 +23,8 @@ mongoose
 // Rutas
 app.use("/api/auth", authRoutes);
 app.use("/api/restaurant", restaurantRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/users", usersRoutes);
 
 // Servidor
 const PORT = 5000;
